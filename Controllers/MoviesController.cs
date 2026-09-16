@@ -21,7 +21,7 @@ namespace MvcMovie.Controllers
 
         // GET: Movies
         // GET: Movies
-        public async Task<IActionResult> Index(string movieGenre, string searchString)
+        public async Task<IActionResult> Index(string movieGenre, string searchString, DateTime dateSearch)
         {
             if (_context.Movie == null)
             {
@@ -43,6 +43,11 @@ namespace MvcMovie.Controllers
             if (!string.IsNullOrEmpty(movieGenre))
             {
                 movies = movies.Where(x => x.Genre == movieGenre);
+            }
+
+            if (dateSearch != DateTime.MinValue)
+            {
+                movies = movies.Where(x => x.ReleaseDate == dateSearch);
             }
 
             var movieGenreVM = new MovieGenreViewModel
